@@ -11,6 +11,13 @@
                 <div class="card shadow">
                     <div class="card-body">
                         <h2 class="card-title text-center mb-4">LogIn to Your Account</h2>
+                        <% if (locals.error) { %>
+                            <div class="container mt-4">
+                            <div class="alert alert-danger" role="alert">
+                              <%= locals.error %>
+                            </div>
+                          </div>
+                          <% } %>
                         <form action="/user/login" method="post">
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email address</label>
