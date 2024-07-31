@@ -60,6 +60,39 @@ router.post("/comment/:blogId", async (req, res) => {
   return res.redirect(`/blog/${req.params.blogId}`);
 });
 
+
+// router.get('/:id', async (req, res, next) => {
+//   try {
+//     if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+//       return res.status(400).send('Invalid ID');
+//     }
+//     const blog = await Blog.findById(req.params.id);
+//     if (!blog) {
+//       return res.status(404).send('Blog not found');
+//     }
+//     res.render('blogPost', { blog });
+//   } catch (error) {
+//     next(error);
+//   }
+// });
+
+
+router.get('/search/:key', async (req, res) => {
+  try {
+    const key = req.params.key;
+    const blogs = await Blog.find({
+      $or: [
+        { title: { $regex: key, $options: 'i' } },
+        { body: { $regex: key, $options: 'i' } },
+      ],
+    });
+    res.render('home', { blogs, searchTerm: key });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('An error occurred during search');
+  }
+});
+
 module.exports = router
 
 
