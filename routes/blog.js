@@ -38,17 +38,23 @@ router.post('/add-new', upload.single('coverImage'), async (req, res)=>{
     res.redirect(`/blog/${blog._id}`)
 });
 
-router.get("/:id", async (req, res) => {
-  const blog = await Blog.findById(req.params.id).populate("createdBy");
-  const comments = await Comment.find({ blogId: req.params.id }).populate(
-    "createdBy"
-  );
-
-  return res.render("blog", {
-    user: req.user,
-    blog,
-    comments,
-  });
+router.get('/:id', async (req, res) => {
+  try {
+    const blog = await Blog.findById(req.params.id).populate('createdBy');
+    if (!blog) {
+      return res.status(404).send('Blog post not found');
+    }
+    const comments = await Comment.find({ blogId: req.params.id }).populate('createdBy');
+    
+    res.render('blog', {
+      blog,
+      comments,
+      user: req.user // Pass user data if available
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal Server Error');
+  }
 });
 
 router.post("/comment/:blogId", async (req, res) => {
@@ -59,23 +65,6 @@ router.post("/comment/:blogId", async (req, res) => {
   });
   return res.redirect(`/blog/${req.params.blogId}`);
 });
-
-
-// router.get('/:id', async (req, res, next) => {
-//   try {
-//     if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-//       return res.status(400).send('Invalid ID');
-//     }
-//     const blog = await Blog.findById(req.params.id);
-//     if (!blog) {
-//       return res.status(404).send('Blog not found');
-//     }
-//     res.render('blogPost', { blog });
-//   } catch (error) {
-//     next(error);
-//   }
-// });
-
 
 router.get('/search/:key', async (req, res) => {
   try {

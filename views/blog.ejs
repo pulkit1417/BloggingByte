@@ -1,230 +1,181 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <%- include('./partials/head.ejs') %>
-
+<%- include('base', { content: `
     <style>
       body {
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
         background-color: #121212;
         color: #e0e0e0;
-        margin: 0;
-        padding: 0;
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
+        font-family: Arial, sans-serif;
       }
-      main {
-        flex-grow: 1;
-        display: flex;
-        justify-content: center;
-        align-items: flex-start;
-        padding: 2rem 1rem;
-      }
-      .container {
-        display: flex;
-        max-width: 1200px;
-        width: 100%;
+      .blog-card {
+        max-width: 800px;
+        margin: 20px auto;
         background-color: #1e1e1e;
-        border-radius: 12px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         overflow: hidden;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      }
-      .blog-content,
-      .comments-section {
-        padding: 2rem;
-      }
-      .blog-content {
-        flex: 3;
-      }
-      .comments-section {
-        flex: 2;
-        border-left: 1px solid #333;
       }
       .cover-image {
         width: 100%;
-        height: 400px;
+        height: 300px;
         object-fit: cover;
       }
-      h1 {
-        font-size: 2.5rem;
-        margin-bottom: 1rem;
+      .blog-content {
+        padding: 20px;
+      }
+      .blog-title {
+        font-size: 28px;
+        margin-bottom: 10px;
         color: #ffffff;
       }
-      .date {
-        font-size: 0.9rem;
-        color: #9e9e9e;
-        margin-bottom: 1.5rem;
+      .blog-date {
+        color: #b0b0b0;
+        margin-bottom: 15px;
       }
-      .description {
-        font-size: 1.1rem;
+      .blog-description {
         line-height: 1.6;
       }
       .author {
         display: flex;
         align-items: center;
-        margin-top: 2rem;
-      }
-      .author img {
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        margin-right: 1rem;
-      }
-      .author-info {
-        color: #9e9e9e;
-      }
-      .author-info h4 {
-        margin: 0;
-        color: #ffffff;
-      }
-      .comments-section h2 {
-        font-size: 1.5rem;
-        margin-bottom: 1rem;
-        color: #ffffff;
-      }
-      .comment {
-        margin-bottom: 1rem;
-        padding: 1rem;
+        margin-top: 20px;
         background-color: #2a2a2a;
+        padding: 10px;
         border-radius: 8px;
       }
-      .comment .comment-author {
-        font-size: 1rem;
+      .author img {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 15px;
+        border: 2px solid #4a4a4a;
+      }
+      .author-info {
+        display: flex;
+        flex-direction: column;
+      }
+      .author-name {
         font-weight: bold;
         color: #ffffff;
       }
-      .comment .comment-date {
-        font-size: 0.8rem;
-        color: #9e9e9e;
+      .author-title {
+        color: #b0b0b0;
+        font-size: 0.9em;
       }
-      .comment .comment-text {
-        font-size: 1rem;
-        color: #e0e0e0;
-        margin-top: 0.5rem;
-      }
-      .comment-form {
-        margin-top: 2rem;
-      }
-      .comment-form input {
-        width: 100%;
-        padding: 1rem;
-        border: none;
+      .comments-section {
+        margin-top: 30px;
+        background-color: #1e1e1e;
         border-radius: 8px;
-        background-color: #2a2a2a;
-        color: #e0e0e0;
-        font-size: 1rem;
-        margin-bottom: 1rem;
+        padding: 20px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
       }
-      .comment-form button {
-        padding: 0.75rem 1.5rem;
-        border: none;
-        border-radius: 8px;
-        background-color: #4caf50;
-        color: white;
-        font-size: 1rem;
-        cursor: pointer;
-        transition: background-color 0.3s;
-      }
-      .comment-form button:hover {
-        background-color: #45a049;
+      .comments-title {
+        font-size: 24px;
+        margin-bottom: 20px;
+        color: #ffffff;
       }
       .comment {
         display: flex;
-        align-items: flex-start;
-        margin-bottom: 1rem;
-        padding: 1rem;
+        margin-bottom: 20px;
         background-color: #2a2a2a;
+        padding: 15px;
         border-radius: 8px;
+        transition: transform 0.2s ease;
+      }
+      .comment:hover {
+        transform: translateY(-5px);
       }
       .comment-pfp {
-        width: 40px;
-        height: 40px;
+        width: 50px;
+        height: 50px;
         border-radius: 50%;
-        margin-right: 1rem;
+        object-fit: cover;
+        margin-right: 15px;
+        border: 2px solid #4a4a4a;
       }
-      .comment .comment-author {
-        font-size: 1rem;
+      .comment-content {
+        flex-grow: 1;
+      }
+      .comment-author {
         font-weight: bold;
         color: #ffffff;
       }
-      .comment .comment-date {
-        font-size: 0.8rem;
-        color: #9e9e9e;
+      .comment-date {
+        color: #b0b0b0;
+        font-size: 0.9em;
       }
-      .comment .comment-text {
-        font-size: 1rem;
+      .comment-text {
+        margin-top: 10px;
+        white-space: pre-wrap;
+      }
+      .comment-form {
+        margin-top: 20px;
+      }
+      .comment-form input {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 4px;
+        background-color: #2a2a2a;
         color: #e0e0e0;
-        margin-top: 0.5rem;
+        margin-bottom: 10px;
       }
-      .comment-placeholder{
-        color:white;
+      .comment-form button {
+        padding: 10px 20px;
+        background-color: #4a4a4a;
+        color: #ffffff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+      }
+      .comment-form button:hover {
+        background-color: #5a5a5a;
       }
     </style>
-  </head>
-  <body>
-    <%- include('./partials/nav.ejs') %>
-
-    <main>
-      <div class="container">
-        <div class="blog-content">
-          <img
-            src="<%= blog.coverImage %>"
-            alt="Blog post cover"
-            class="cover-image"
-          />
-          <h1><%= blog.title %></h1>
-          <div class="date">
-            <%= new Date(blog.createdAt).toLocaleDateString('en-US', { year:
-            'numeric', month: 'long', day: 'numeric' }) %>
-          </div>
-          <p class="description"><%= blog.body %></p>
-          <div class="author">
-            <img src="<%= blog.createdBy.profileImageURL %>" alt="Author" />
-            <div class="author-info">
-              <h4><%= blog.createdBy.fullName %></h4>
-              <p>Author</p>
-            </div>
-          </div>
+    
+    <div class="blog-card">
+      ${blog.coverImage ? `<img src="${blog.coverImage}" alt="Blog post cover" class="cover-image" />` : ''}
+      <div class="blog-content">
+        <h1 class="blog-title">${blog.title || 'Untitled'}</h1>
+        <div class="blog-date">
+          ${blog.createdAt ? new Date(blog.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : 'Date unknown'}
         </div>
-        <div class="comments-section">
-          <h2>Comments (<%= comments.length %>)</h2>
-          <% comments.forEach(comment => { %>
-          <div class="comment">
-            <img
-              src="<%= comment.createdBy.profileImageURL %>"
-              alt="Commenter"
-              class="comment-pfp"
-            />
-            <div>
-              <div class="comment-author">
-                <%= comment.createdBy.fullName %>
-              </div>
-              <div class="comment-date">
-                <%= new Date(comment.createdAt).toLocaleDateString('en-US', {
-                year: 'numeric', month: 'long', day: 'numeric' }) %>
-              </div>
-              <pre class="comment-text"><%= comment.content %></pre>
-            </div>
+        <p class="blog-description">${blog.body || 'No content available'}</p>
+        <div class="author">
+          ${blog.createdBy && blog.createdBy.profileImageURL ? 
+            `<img src="${blog.createdBy.profileImageURL}" alt="Author" />` : 
+            '<img src="/default-profile.jpg" alt="Default Author Image" />'}
+          <div class="author-info">
+            <span class="author-name">${blog.createdBy && blog.createdBy.fullName ? blog.createdBy.fullName : 'Unknown Author'}</span>
+            <span class="author-title">Author</span>
           </div>
-          <% }); %> <% if (locals.user) { %>
-          <div class="comment-form">
-            <form action="comment/<%= blog._id %>" method="post">
-              <input
-                class="comment-placeholder"
-                type="text"
-                name="content"
-                class="form-control"
-                placeholder="Enter your comment"
-              />
-              <button type="submit">Comment</button>
-            </form>
-          </div>
-          <% } %>
         </div>
       </div>
-    </main>
-
-    <%- include('./partials/script.ejs') %>
-  </body>
-</html>
+    </div>
+    
+    <div class="comments-section">
+      <h2 class="comments-title">Comments (${comments ? comments.length : 0})</h2>
+      ${comments ? comments.map(comment => `
+        <div class="comment">
+          ${comment.createdBy && comment.createdBy.profileImageURL ? 
+            `<img src="${comment.createdBy.profileImageURL}" alt="Commenter" class="comment-pfp" />` :
+            '<img src="/default-profile.jpg" alt="Default Commenter Image" class="comment-pfp" />'}
+          <div class="comment-content">
+            <div class="comment-author">${comment.createdBy && comment.createdBy.fullName ? comment.createdBy.fullName : 'Anonymous'}</div>
+            <div class="comment-date">
+              ${comment.createdAt ? new Date(comment.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : 'Date unknown'}
+            </div>
+            <p class="comment-text">${comment.content || 'No content'}</p>
+          </div>
+        </div>
+      `).join('') : '<p>No comments yet. Be the first to comment!</p>'}
+      ${user ? `
+        <div class="comment-form">
+          <form action="/blog/comment/${blog._id}" method="post">
+            <input class="comment-placeholder" type="text" name="content" placeholder="Share your thoughts..." />
+            <button type="submit">Post Comment</button>
+          </form>
+        </div>
+      ` : ''}
+    </div>
+    ` }) %>

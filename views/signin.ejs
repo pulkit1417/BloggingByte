@@ -1,76 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <%- include('./partials/head.ejs') %>
-    <style>
-        body {
-            background-color: #1a1a1a;
-            color: #e0e0e0;
-        }
-        .card {
-            background-color: #2a2a2a;
-            border: none;
-            color: #e0e0e0;
-        }
-        .form-control {
-            background-color: #333;
-            border: none;
-            color: #e0e0e0;
-        }
-        .form-control:focus {
-            background-color: #444;
-            color: #e0e0e0;
-            box-shadow: none;
-        }
-        .btn-primary {
-            background-color: #6200ea;
-            border: none;
-        }
-        .btn-primary:hover {
-            background-color: #3700b3;
-        }
-        .text-link {
-            color: #bb86fc;
-        }
-        .text-link:hover {
-            color: #6200ea;
-        }
-    </style>
-</head>
-<body>
-    <%- include('./partials/nav.ejs') %>
-    <div class="container">
-        <div class="row justify-content-center mt-5">
-            <div class="col-md-6">
-                <div class="card shadow-sm p-3 mb-5 rounded">
-                    <div class="card-body">
-                        <h2 class="card-title text-center mb-4">Sign In to Your Blog</h2>
-                        <form action="/user/signin" method="post">
-                            <div class="mb-3">
-                                <label for="fullName" class="form-label">Full Name</label>
-                                <input type="text" class="form-control" id="fullName" name="fullName" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email address</label>
-                                <input type="email" class="form-control" id="email" name="email" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="password" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="password" name="password" required>
-                            </div>
-                            <div class="d-grid gap-2">
-                                <button type="submit" class="btn btn-primary">Sign In</button>
-                            </div>
-                        </form>
-                        <hr>
-                        <div class="text-center">
-                            <p>Already have an account? <a href="/user/login" class="text-decoration-none text-link">Login</a></p>
+<%- include('base', { content: `
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title text-center mb-4">Sign In to Your Blog</h2>
+                    <form action="/user/signin" method="post">
+                        <div class="mb-3">
+                            <label for="fullName" class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="fullName" name="fullName" placeholder="Jhon Doe" required>
                         </div>
-                    </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email address</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="jhondoe@gmail.com" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" name="password" placeholder="******" required>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Sign In</button>
+                        </div>
+                    </form>
+                    <hr>
+                    <p class="text-center">Already have an account? <a href="/user/login" class="text-link">Login</a></p>
                 </div>
             </div>
         </div>
     </div>
-    <%- include('./partials/script.ejs') %>
-</body>
-</html>
+    ` }) %>

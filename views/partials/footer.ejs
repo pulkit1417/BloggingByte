@@ -1,0 +1,73 @@
+<style>
+    .footer {
+      background: #343a40; /* Dark background */
+      color: #f8f9fa; /* Light text color */
+      padding: 4rem 0;
+    }
+    .footer a {
+      color: #f8f9fa;
+      text-decoration: none;
+    }
+    .footer a:hover {
+      color: #adb5bd;
+      text-decoration: underline;
+    }
+    .footer h5 {
+      font-size: 1.25rem;
+      margin-bottom: 1.5rem;
+      border-bottom: 2px solid #adb5bd; /* Subtle border for headers */
+      padding-bottom: 0.5rem;
+    }
+    .footer p, .footer li {
+      margin-bottom: 0.5rem;
+    }
+    .footer .social-icons a {
+      color: #f8f9fa;
+      margin: 0 0.5rem;
+      font-size: 1.5rem;
+      transition: color 0.3s;
+    }
+    .footer .social-icons a:hover {
+      color: #adb5bd;
+    }
+    .footer .contact-info a {
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+  </style>
+<footer class="footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 mb-4">
+          <h5>About Us</h5>
+          <p>BloggingByte provides engaging content on the latest trends in development and technology. Join us for insightful articles and discussions.</p>
+        </div>
+        <div class="col-md-4 mb-4">
+          <h5>Quick Links</h5>
+          <ul class="list-unstyled">
+            <li><a href="/">Home</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/contact">Contact</a></li>
+          </ul>
+        </div>
+        <div class="col-md-4 mb-4 contact-info">
+          <h5>Contact Us</h5>
+          <p>Email: <a href="mailto:support@bloggingbyte.com">support@bloggingbyte.com</a></p>
+          <p>Phone: <a href="tel:+1234567890">+1 234 567 890</a></p>
+          <div class="social-icons">
+            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="text-center mt-4">
+        <p>&copy; <span id="year"></span> BloggingByte. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+<script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
