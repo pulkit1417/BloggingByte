@@ -75,7 +75,7 @@ router.get('/search/:key', async (req, res) => {
         { body: { $regex: key, $options: 'i' } },
       ],
     });
-    res.render('home', { blogs, searchTerm: key });
+    res.render('home', { blogs, searchTerm: key,user:req.user });
   } catch (error) {
     console.error(error);
     res.status(500).send('An error occurred during search');
