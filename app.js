@@ -31,6 +31,10 @@ app.use(checkForAuthenticationCookie("token"))
 // app.use(express.static('public'));
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use((req, res, next) => {
+  res.locals.user = req.user;
+  next();
+});
 
 app.use('/user', userRoute) 
 app.use('/blog', blogRoute)

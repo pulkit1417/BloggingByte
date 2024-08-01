@@ -32,10 +32,10 @@
         <% if (locals.user) { %>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <i class="fas fa-user"></i> Pulkit
+              <i class="fas fa-user"></i> <%= locals.user.fullName || 'User' %>
             </a>
             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark">
-              <li><a class="dropdown-item" href="/user/profile"><i class="fas fa-user-circle"></i> Profile</a></li>
+              <li><a class="dropdown-item" href="/user/<%= locals.user._id %>"><i class="fas fa-user-circle"></i> Profile</a></li>
               <li><a class="dropdown-item" href="/user/logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
             </ul>
           </li>
