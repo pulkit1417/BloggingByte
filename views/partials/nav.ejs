@@ -22,11 +22,13 @@
           </li>
         <% } %>
       </ul>
-      <form class="d-flex" onsubmit="return performSearch()">
-        <input class="form-control me-2" type="search" placeholder="Search blogs..." aria-label="Search" id="searchInput">
-        <button class="btn btn-outline-success" type="submit">
-          <i class="fas fa-search"></i>
-        </button>
+      <form class="d-flex mx-auto" onsubmit="return performSearch()" style="width: 40%;">
+        <div class="input-group">
+          <input class="form-control" type="search" placeholder="Search blogs..." aria-label="Search" id="searchInput">
+          <button class="btn btn-outline-light" type="submit">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
       </form>
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
         <% if (locals.user) { %>
@@ -55,6 +57,7 @@
     </div>
   </div>
 </nav>
+
 <script>
   function performSearch() {
     const searchTerm = document.getElementById('searchInput').value;
