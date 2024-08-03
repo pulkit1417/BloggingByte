@@ -34,13 +34,15 @@
         <% if (locals.user) { %>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <i class="fas fa-user"></i> <%= locals.user.fullName || 'User' %>
+              <img src="<%= user.profileImageURL %>" style="height: 40px;width: 40px; border-radius: 50%; margin-right: 4px;">
+              <%= user.fullName || 'User' %>
             </a>
             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark">
               <li><a class="dropdown-item" href="/user/<%= locals.user._id %>"><i class="fas fa-user-circle"></i> Profile</a></li>
               <li><a class="dropdown-item" href="/user/logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
             </ul>
           </li>
+          
         <% } else { %>
           <li class="nav-item">
             <a class="nav-link" href="/user/signin">
