@@ -1,0 +1,335 @@
+<%- include('base', { content: `
+  <style>
+    body {
+            background-color: #121212;
+            color: #e0e0e0;
+            line-height: 1.6;
+            font-family: Arial, sans-serif;
+        }
+        .blog-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            background-color: #1e1e1e;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            padding: 40px;
+            border-radius: 8px;
+        }
+        .blog-header {
+            position: relative;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .blog-title {
+            font-size: 32px;
+            margin-bottom: 10px;
+            color: #ffffff;
+        }
+        .blog-meta {
+            font-size: 14px;
+            color: #b0b0b0;
+            margin-bottom: 20px;
+        }
+        .action-icons {
+            display: flex;
+            gap: 15px;
+        }
+        .share-icon, .delete-icon {
+            font-size: 24px;
+            color: #4a9eff;
+            cursor: pointer;
+            transition: color 0.2s ease;
+            position: relative;
+        }
+        .share-icon:hover, .delete-icon:hover {
+            color: #82caff;
+        }
+        .delete-icon {
+            color: #ff4a4a;
+        }
+        .delete-icon:hover {
+            color: #ff8282;
+        }
+        .share-popup {
+            display: none;
+            position: absolute;
+            top: 30px;
+            right: 0;
+            background-color: #2a2a2a;
+            border-radius: 4px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            z-index: 1000;
+        }
+        .share-popup a {
+            display: block;
+            padding: 10px 20px;
+            color: #e0e0e0;
+            text-decoration: none;
+            transition: background-color 0.2s ease;
+        }
+        .share-popup a:hover {
+            background-color: #3a3a3a;
+        }
+        .copy-animation {
+            position: relative;
+            display: inline-block;
+        }
+        .copy-animation::after {
+            content: 'Copied!';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translate(-50%, 10px);
+            background: rgba(0, 0, 0, 0.7);
+            color: #ffffff;
+            padding: 5px 10px;
+            border-radius: 4px;
+            opacity: 0;
+            font-size: 14px;
+            pointer-events: none;
+            white-space: nowrap;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            z-index: 10;
+        }
+        .copy-animation.show::after {
+            opacity: 1;
+            transform: translate(-50%, 20px);
+        }
+        @keyframes copy-fadeout {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 0; }
+        }
+        .blog-content-wrapper {
+            display: flex;
+            gap: 40px;
+            align-items: flex-start;
+        }
+        .blog-text {
+            flex: 1;
+            font-size: 18px;
+        }
+        .blog-image {
+            flex: 1;
+            max-width: 50%;
+        }
+        .blog-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+        .author {
+            display: flex;
+            align-items: center;
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #2a2a2a;
+            border-radius: 8px;
+        }
+        .author img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 20px;
+            border: 4px solid #6200ea;
+        }
+        .author-info {
+            display: flex;
+            flex-direction: column;
+        }
+        .author-name {
+            font-weight: bold;
+            color: #ffffff;
+        }
+        .author-title {
+            color: #b0b0b0;
+            font-size: 14px;
+        }
+        .comments-section {
+            margin-top: 40px;
+        }
+        .comments-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+        .comment {
+            margin-bottom: 20px;
+            padding: 20px;
+            background-color: #2a2a2a;
+            border-radius: 8px;
+        }
+        .comment-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .comment-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 15px;
+        }
+        .comment-meta {
+            flex-grow: 1;
+        }
+        .comment-author {
+            font-weight: bold;
+            color: #ffffff;
+        }
+        .comment-date {
+            font-size: 12px;
+            color: #b0b0b0;
+        }
+        .comment-content {
+            font-size: 16px;
+            color: #e0e0e0;
+        }
+        .comment-form {
+            margin-top: 30px;
+        }
+        .comment-form textarea {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #444;
+            border-radius: 4px;
+            resize: vertical;
+            min-height: 100px;
+            background-color: #2a2a2a;
+            color: #e0e0e0;
+        }
+        .comment-form button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #6200ea;
+            color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        .comment-form button:hover {
+            background-color: #3a7fcf;
+        }
+  </style>
+
+  <div class="blog-container">
+    <div class="blog-header">
+      <h1 class="blog-title">${blog.title || 'Untitled'}</h1>
+      <div class="action-icons">
+        <div class="share-icon copy-animation" onclick="toggleSharePopup()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="18" cy="5" r="3"></circle>
+            <circle cx="6" cy="12" r="3"></circle>
+            <circle cx="18" cy="19" r="3"></circle>
+            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+          </svg>
+        </div>
+        <a href="#" 
+   onclick="deleteBlog('${blog._id  }')"
+   class="delete-icon">
+  <i class="fas fa-trash"></i>
+</a>
+      </div>
+      <div class="share-popup" id="sharePopup">
+        <a href="#" onclick="copyLink()">Copy Link</a>
+      </div>
+    </div>
+    
+    <div class="blog-content-wrapper">
+      ${blog.coverImage ? `
+        <div class="blog-image">
+          <img src="${blog.coverImage}" alt="Blog post image" />
+        </div>
+      ` : ''}
+      <div class="blog-text">
+        ${blog.body || 'No content available'}
+      </div>
+    </div>
+    
+    <div class="author">
+      ${blog.createdBy && blog.createdBy.profileImageURL ? 
+        `<img src="${blog.createdBy.profileImageURL}" alt="Author" />` : 
+        '<img src="/default-profile.jpg" alt="Default Author Image" />'}
+      <div class="author-info">
+        <span class="author-name">${blog.createdBy && blog.createdBy.fullName ? blog.createdBy.fullName : 'Unknown Author'}</span>
+        <span class="author-title">Author</span>
+      </div>
+    </div>
+    
+    <div class="comments-section">
+      <h2 class="comments-title">Comments (${comments ? comments.length : 0})</h2>
+      ${comments ? comments.map(comment => `
+        <div class="comment">
+          <div class="comment-header">
+            ${comment.createdBy && comment.createdBy.profileImageURL ? 
+              `<img src="${comment.createdBy.profileImageURL}" alt="Commenter" class="comment-avatar" />` :
+              '<img src="/default-profile.jpg" alt="Default Commenter Image" class="comment-avatar" />'}
+            <div class="comment-meta">
+              <div class="comment-author">${comment.createdBy && comment.createdBy.fullName ? comment.createdBy.fullName : 'Anonymous'}</div>
+              <div class="comment-date">
+                ${comment.createdAt ? new Date(comment.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : 'Date unknown'}
+              </div>
+            </div>
+          </div>
+          <div class="comment-content">${comment.content || 'No content'}</div>
+        </div>
+      `).join('') : '<p>No comments yet. Be the first to comment!</p>'}
+      
+      ${user ? `
+        <div class="comment-form">
+          <form action="/blog/comment/${blog._id}" method="POST">
+            <textarea name="content" placeholder="Write a comment..." required></textarea>
+            <button type="submit">Post Comment</button>
+          </form>
+        </div>
+      ` : '<p>You must be logged in to comment.</p>'}
+    </div>
+  </div>
+
+  <script>
+    function toggleSharePopup() {
+      const popup = document.getElementById('sharePopup');
+      const shareIcon = document.querySelector('.share-icon');
+  
+      // Toggle the display of the popup
+      if (popup.style.display === 'block') {
+          popup.style.display = 'none';
+          document.removeEventListener('click', closePopupOnClickOutside);
+      } else {
+          popup.style.display = 'block';
+  
+          // Add an event listener to close the popup when clicking outside
+          setTimeout(() => {
+              document.addEventListener('click', closePopupOnClickOutside);
+          }, 0);
+      }
+  
+      function closePopupOnClickOutside(event) {
+          if (!popup.contains(event.target) && event.target !== shareIcon) {
+              popup.style.display = 'none';
+              document.removeEventListener('click', closePopupOnClickOutside);
+          }
+      }
+    }
+  
+    function copyLink() {
+      navigator.clipboard.writeText(window.location.href).then(() => {
+          const copyAnimation = document.querySelector('.copy-animation');
+          copyAnimation.classList.add('show');
+          setTimeout(() => {
+              copyAnimation.classList.remove('show');
+          }, 2000);
+      });
+    }
+      
+    function deleteBlog(blogId) {
+  if (confirm('Are you sure you want to delete this blog post?')) {
+    window.location.href = '/blog/d/' + blogId + '?action=delete';
+  }
+}
+  </script>
+` }) %>

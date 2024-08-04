@@ -82,6 +82,46 @@ router.get('/search/:key', async (req, res) => {
   }
 });
 
+router.get('/d/:id', async (req, res) => {
+  try {
+    const blogId = req.params.id;
+    const blog = await Blog.findById(blogId).populate('createdBy');
+    
+    if (!blog) {
+      return res.status(404).send('Blog post not found');
+    }
+
+    // Check if delete action is requested
+    if (req.query.action === 'delete') {
+      // Check if the user is authenticated and is the author of the blog
+      if (!req.user || blog.createdBy._id.toString() !== req.user._id.toString()) {
+        return res.status(403).send('You are not authorized to delete this blog post');
+      }
+
+      // Delete comments associated with the blog
+      await Comment.deleteMany({ blogId: blogId });
+
+      // Delete the blog
+      await Blog.findByIdAndDelete(blogId);
+
+      // Redirect to user's profile or home page after deletion
+      return res.redirect(`/user/${req.user._id}`);
+    }
+
+    // If not deleting, proceed with rendering the blog
+    const comments = await Comment.find({ blogId: blogId }).populate('createdBy');
+    
+    res.render('profile-page-blog', {
+      blog: blog,
+      comments: comments,
+      user: req.user
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
 module.exports = router
 
 
