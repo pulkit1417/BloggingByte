@@ -1,40 +1,62 @@
 <%- include('base', { content: `
-    <div class="container-fluid min-vh-100 d-flex">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-md-5">
-            <div class="card border-0 shadow-lg">
-              <div class="card-header bg-primary text-white text-center py-4">
-                <h2 class="mb-0">Welcome Back</h2>
+<div class="container-fluid min-vh-100 d-flex">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-5">
+        <div class="card border-0 shadow-lg">
+          <div class="card-header bg-primary text-white text-center py-4">
+            <h2 class="mb-0">Welcome Back</h2>
+          </div>
+          <div class="card-body p-5">
+            <form action="/user/login" method="post">
+              <div class="mb-4">
+                <label for="email" class="form-label">Email address</label>
+                <input
+                  type="email"
+                  class="form-control form-control-lg"
+                  id="email"
+                  name="email"
+                  placeholder="Enter your email"
+                  required
+                  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                />
               </div>
-              <div class="card-body p-5">
-                <form action="/user/login" method="post">
-                  <div class="mb-4">
-                    <label for="email" class="form-label">Email address</label>
-                    <input type="email" class="form-control form-control-lg" id="email" name="email" placeholder="Enter your email" required>
-                  </div>
-                  <div class="mb-4">
-                    <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control form-control-lg" id="password" name="password" placeholder="Enter your password" required>
-                  </div>
-                  <div class="d-grid gap-2">
-                    <button type="submit" class="btn btn-primary btn-lg">Log In</button>
-                  </div>
-                </form>
-                <div class="text-center mt-4">
-                  <p>New to BloggingByte? <a href="/user/signin" class="text-primary">Create an account</a></p>
-                </div>
+              <div class="mb-4">
+                <label for="password" class="form-label">Password</label>
+                <input
+                  type="password"
+                  class="form-control form-control-lg"
+                  id="password"
+                  name="password"
+                  placeholder="Enter your password"
+                  required
+                />
               </div>
+              <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-primary btn-lg">
+                  Log In
+                </button>
+              </div>
+            </form>
+            <div class="text-center mt-4">
+              <p>
+                New to BloggingByte?
+                <a href="/user/signin" class="text-primary"
+                  >Create an account</a
+                >
+              </p>
             </div>
           </div>
         </div>
       </div>
     </div>
-    
-    <style>
-      .form-control:focus {
-        border-color: #0d6efd;
-        box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
-      }
-    </style>
-    ` }) %>
+  </div>
+</div>
+
+<style>
+  .form-control:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+  }
+</style>
+` }) %>
