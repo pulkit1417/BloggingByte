@@ -48,7 +48,7 @@ To get a local copy of BloggingByte up and running, follow these simple steps.
     ```
 4. Create a `.env` file in the root directory and add your environment variables:
     ```env
-    PORT=5000
+    PORT=8000
     MONGODB_URI=your_mongodb_connection_string
     JWT_SECRET=your_jwt_secret_key
     ```
@@ -57,16 +57,13 @@ To get a local copy of BloggingByte up and running, follow these simple steps.
     npm start
     ```
 
-6. Open your browser and navigate to `http://localhost:5000` to view the application.
+6. Open your browser and navigate to `http://localhost:8000` to view the application.
 
 ## Live Demo
 
-Check out the live version of BloggingByte [here](https://your-aws-link.com).
+Check out the live version of BloggingByte [here]().
 
 ## Contributing
 
 Contributions are welcome! Please open an issue or submit a pull request for any bugs or feature requests.
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
