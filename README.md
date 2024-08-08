@@ -61,7 +61,7 @@ To get a local copy of BloggingByte up and running, follow these simple steps.
 
 ## Live Demo
 
-Check out the live version of BloggingByte [here]().
+Check out the live version of BloggingByte [here](http://bloggingbyte.ap-south-1.elasticbeanstalk.com/).
 
 ## Contributing
 
