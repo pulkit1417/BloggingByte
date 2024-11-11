@@ -20,7 +20,7 @@ Welcome to BloggingByte, a tech-focused blogging platform designed to solve the 
 - **Backend**: Node.js, Express.js
 - **Database**: MongoDB
 - **Authentication**: JWT (JSON Web Tokens)
-- **Hosting**: AWS
+- **Hosting**: Vercel
 
 ## Getting Started
 
@@ -30,7 +30,6 @@ To get a local copy of BloggingByte up and running, follow these simple steps.
 
 - Node.js and npm installed on your local machine.
 - MongoDB installed locally or have access to a MongoDB Atlas cluster.
-- AWS account for hosting (optional if running locally).
 
 ### Installation
 
@@ -50,6 +49,7 @@ To get a local copy of BloggingByte up and running, follow these simple steps.
     ```env
     PORT=8000
     MONGODB_URI=your_mongodb_connection_string
+    JWT_SECRET=your_secret_key
     ```
 5. Start the server:
     ```bash
